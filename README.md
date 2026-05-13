@@ -20,6 +20,7 @@
 - [Design Choices](#design-choices)
 - [Stack Choices](#stack-choices)
 - [AI Tool](#ai-tool)
+- [What I Would Do Differently](#what-i-would-do-differently)
 - [Installation & Running](#installation--running)
   - [Prerequisites](#prerequisites)
   - [Option A — Docker](#option-a--docker-recommended)
@@ -116,6 +117,22 @@ For this project I used **Claude Sonnet 4.6** as my AI assistant, running direct
 I chose Claude Sonnet specifically because of my past experience with it — it is robust, works methodically through problems, and tends to produce well-structured code rather than jumping to quick but brittle solutions. When something goes wrong it reasons through the issue step by step rather than just retrying the same approach, which made it a reliable partner for a project built from scratch.
 
 Running it inside Visual Studio Code was a deliberate choice as well. Having the assistant embedded in the editor means it has direct access to every file in the workspace — it can read the current state of any file, check for errors, search across the codebase, and make edits in place. This removes the copy-paste back-and-forth of using a standalone chat interface and keeps the entire development loop in one place.
+
+---
+
+### What I Would Do Differently
+
+#### Relying on AI for initial project setup
+
+Looking back, I do not think I made any significant mistakes — the project works as intended and functions as expected. However, one thing I would reconsider is using AI to handle everything from the very beginning, including the initial setup of Laravel, Vue, and Docker. Letting an AI scaffold the entire foundation means you can lose track of what is happening under the hood. In this project, that cost me time with Docker: because I had not set it up manually myself, I did not fully understand the configuration it had generated, and troubleshooting an issue eventually required me to completely reinstall Docker on my machine to reset it. Setting up the core infrastructure by hand at least once gives you a mental model of how all the pieces connect, which makes debugging far faster when something goes wrong.
+
+#### Future additions (not in scope due to time constraints)
+
+These are not things I would do *differently* — they are simply features I thought about during development but could not fit within the available time. I am noting them here as a reminder of where the project could grow:
+
+- **Configurable game length** — let players choose how many correct words are needed to win a match (e.g. first to 3, 5, or 10).
+- **Leaderboard opt-out** — give players the choice to keep their stats private and not appear on the public leaderboard.
+- **Guest player support** — allow a user without a registered account to join a game hosted by a registered player, so a friend can quickly hop in for a casual match without needing to sign up.
 
 ---
 
@@ -278,6 +295,7 @@ When running via Docker, phpMyAdmin is available at **http://localhost:8080**. L
 - [Ontwerpkeuzes](#ontwerpkeuzes)
 - [Stackkeuzes](#stackkeuzes)
 - [AI-tool](#ai-tool-1)
+- [Wat ik de volgende keer anders zou doen](#wat-ik-de-volgende-keer-anders-zou-doen)
 - [Installatie & Starten](#installatie--starten)
   - [Vereisten](#vereisten)
   - [Optie A — Docker](#optie-a--docker-aanbevolen)
@@ -374,6 +392,22 @@ Voor dit project heb ik **Claude Sonnet 4.6** gebruikt als AI-assistent, rechtst
 Ik koos specifiek voor Claude Sonnet vanwege mijn eerdere ervaringen ermee — het is robuust, werkt methodisch door problemen heen en produceert doorgaans goed gestructureerde code in plaats van snel maar fragiele oplossingen. Wanneer er iets misgaat, redeneer het de oorzaak stap voor stap door in plaats van simpelweg dezelfde aanpak opnieuw te proberen. Dat maakte het een betrouwbare partner voor een project dat volledig vanaf nul is opgebouwd.
 
 Het draaien binnen Visual Studio Code was ook een bewuste keuze. De assistent ingebed in de editor hebben betekent dat het directe toegang heeft tot elk bestand in de werkruimte — het kan de huidige staat van elk bestand lezen, fouten controleren, door de codebase zoeken en wijzigingen direct doorvoeren. Dit elimineert het heen-en-weer kopiëren en plakken van een losstaande chatinterface en houdt de volledige ontwikkelcyclus op één plek.
+
+---
+
+### Wat ik de volgende keer anders zou doen
+
+#### Vertrouwen op AI voor de initiële projectopzet
+
+Achteraf gezien denk ik niet dat ik grote fouten heb gemaakt — het project werkt zoals bedoeld en functioneert zoals verwacht. Eén ding dat ik echter zou heroverwegen is het gebruik van AI voor alles vanaf het allereerste begin, inclusief de initiële opzet van Laravel, Vue en Docker. Door een AI de volledige basis te laten opzetten, kun je het overzicht verliezen van wat er "onder de motorkap" gebeurt. In dit project kostte dat me tijd met Docker: omdat ik het niet zelf handmatig had opgezet, begreep ik de gegenereerde configuratie niet volledig, en bij het oplossen van een probleem moest ik uiteindelijk Docker volledig opnieuw installeren op mijn computer om het te resetten. De kerninfrastructuur minstens één keer zelf met de hand opzetten geeft je een mentaal model van hoe alle onderdelen samenhangen, waardoor debuggen veel sneller gaat als er iets misgaat.
+
+#### Toekomstige toevoegingen (nu buiten scope door tijdsgebrek)
+
+Dit zijn geen dingen die ik *anders* zou doen — het zijn simpelweg functies waar ik tijdens de ontwikkeling aan gedacht heb maar die niet binnen de beschikbare tijd pasten. Ik noteer ze hier als herinnering van waar het project naartoe zou kunnen groeien:
+
+- **Instelbare spellengte** — laat spelers kiezen hoeveel correcte woorden er nodig zijn om een duel te winnen (bijv. eerst naar 3, 5 of 10).
+- **Klassement afmelden** — geef spelers de keuze om hun statistieken privé te houden en niet op het openbare klassement te verschijnen.
+- **Gastspeler-ondersteuning** — laat een gebruiker zonder geregistreerd account deelnemen aan een spel dat door een geregistreerde speler wordt gehost, zodat een vriend snel kan instappen voor een casual potje zonder zich te hoeven aanmelden.
 
 ---
 
