@@ -2,12 +2,16 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 // Public auth routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login',    [AuthController::class, 'login']);
+
+// Leaderboard — public so guests can view it too
+Route::get('/leaderboard', [LeaderboardController::class, 'index']);
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {

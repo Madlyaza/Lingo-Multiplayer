@@ -102,6 +102,18 @@ button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .user-info { display: flex; align-items: center; gap: 1rem; font-size: 0.9rem; color: #94a3b8; }
 
+.btn-leaderboard {
+  padding: 0.4rem 1rem;
+  background: transparent;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #94a3b8;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-leaderboard:hover { background: #334155; color: #f1f5f9; }
+
 .user-info button {
   padding: 0.4rem 1rem;
   background: transparent;

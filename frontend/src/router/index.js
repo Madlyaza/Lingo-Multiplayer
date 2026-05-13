@@ -36,6 +36,12 @@ const routes = [
     component: () => import('@/views/GameView.vue'),
     meta: { requiresAuth: true },
   },
+  {
+    path: '/leaderboard',
+    name: 'leaderboard',
+    component: () => import('@/views/LeaderboardView.vue'),
+    meta: { requiresAuth: true },
+  },
 ]
 
 const router = createRouter({

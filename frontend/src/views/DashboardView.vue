@@ -3,6 +3,7 @@
     <header class="dashboard-header">
       <h1>Lingo Multiplayer</h1>
       <div class="user-info">
+        <router-link to="/leaderboard" class="btn-leaderboard">Leaderboard</router-link>
         <span>{{ auth.user?.name }}</span>
         <button @click="handleLogout" :disabled="loggingOut">
           {{ loggingOut ? 'Logging out…' : 'Log Out' }}
