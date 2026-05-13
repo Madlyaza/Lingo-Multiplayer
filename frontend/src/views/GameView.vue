@@ -139,9 +139,24 @@ const firstGuesserName = computed(() => {
     : game.value.player2?.name
 })
 
-const hintLetters = computed(() =>
-  game.value?.word_hint?.split('') ?? []
-)
+const hintLetters = computed(() => {
+  if (!game.value?.word_hint) return []
+
+  // Start from the backend hint (first letter + underscores)
+  const letters = game.value.word_hint.split('')
+
+  // Overlay every correctly-placed letter found in this round's guesses
+  for (const guess of (game.value.current_guesses ?? [])) {
+    if (!guess.feedback) continue
+    for (let i = 0; i < 5; i++) {
+      if (guess.feedback[i] === 'correct') {
+        letters[i] = guess.word[i]
+      }
+    }
+  }
+
+  return letters
+})
 
 onMounted(async () => {
   await gameStore.fetchGame(route.params.id)
