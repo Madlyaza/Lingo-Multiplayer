@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Helpers;
+
+class WordList
+{
+    private static array $words = [
+        'ABOUT', 'ABOVE', 'ACTOR', 'ADMIT', 'ADOPT', 'ADULT', 'AFTER', 'AGENT',
+        'AGREE', 'AHEAD', 'ALARM', 'ALBUM', 'ALERT', 'ANGEL', 'ANGER', 'ANGLE',
+        'APPLE', 'ARENA', 'ARISE', 'ARMOR', 'ARRAY', 'ARROW', 'ASSET', 'ATTIC',
+        'AVOID', 'AWARD', 'AWARE', 'BASIC', 'BATCH', 'BEACH', 'BEGAN', 'BEING',
+        'BELOW', 'BENCH', 'BIRTH', 'BLACK', 'BLADE', 'BLAME', 'BLANK', 'BLAST',
+        'BLEND', 'BLOCK', 'BLOOD', 'BOARD', 'BOOST', 'BOUND', 'BRAIN', 'BRAND',
+        'BRAVE', 'BREAD', 'BREAK', 'BRICK', 'BRING', 'BROAD', 'BROWN', 'BUILD',
+        'BUILT', 'BURST', 'CABLE', 'CARRY', 'CATCH', 'CAUSE', 'CHAIN', 'CHAIR',
+        'CHAOS', 'CHARM', 'CHART', 'CHASE', 'CHECK', 'CHESS', 'CHEST', 'CHILD',
+        'CIVIC', 'CLAIM', 'CLASS', 'CLEAN', 'CLEAR', 'CLICK', 'CLIFF', 'CLIMB',
+        'CLOCK', 'CLOSE', 'CLOUD', 'COACH', 'COAST', 'COMET', 'CORAL', 'COUNT',
+        'COURT', 'COVER', 'CRACK', 'CRAFT', 'CRANE', 'CRASH', 'CRAZY', 'CREAM',
+        'CRIME', 'CROSS', 'CROWD', 'CROWN', 'CRUSH', 'CYCLE', 'DAILY', 'DANCE',
+        'DEATH', 'DEPTH', 'DEVIL', 'DIGIT', 'DOUBT', 'DRAFT', 'DRAIN', 'DRAMA',
+        'DREAM', 'DRESS', 'DRIFT', 'DRINK', 'DRIVE', 'EAGLE', 'EARLY', 'EARTH',
+        'EIGHT', 'ELITE', 'EMPTY', 'ENEMY', 'ENJOY', 'ENTER', 'EQUAL', 'ERROR',
+        'ESSAY', 'EXACT', 'EXIST', 'EXTRA', 'FABLE', 'FAITH', 'FANCY', 'FAULT',
+        'FEAST', 'FENCE', 'FIELD', 'FIFTH', 'FIGHT', 'FINAL', 'FIRST', 'FIXED',
+        'FLAME', 'FLASH', 'FLOAT', 'FLOOR', 'FOCUS', 'FORCE', 'FORGE', 'FORUM',
+        'FOUND', 'FRAME', 'FRESH', 'FRONT', 'FROST', 'FRUIT', 'FUNNY', 'GHOST',
+        'GIANT', 'GLASS', 'GLOBE', 'GLORY', 'GLOVE', 'GRACE', 'GRADE', 'GRAIN',
+        'GRAND', 'GRANT', 'GRAPE', 'GRASP', 'GRASS', 'GRAVE', 'GREAT', 'GREEN',
+        'GRILL', 'GROUP', 'GROVE', 'GUARD', 'GUESS', 'GUIDE', 'GUILD', 'HAPPY',
+        'HARSH', 'HEART', 'HEAVY', 'HORSE', 'HOUSE', 'HUMAN', 'HURRY', 'IMAGE',
+        'INDEX', 'INNER', 'INPUT', 'ISSUE', 'IVORY', 'JEWEL', 'JOINT', 'JUDGE',
+        'JUICE', 'KNIFE', 'KNOCK', 'KNOWN', 'LABEL', 'LANCE', 'LARGE', 'LASER',
+        'LAUGH', 'LAYER', 'LEARN', 'LEGAL', 'LEVEL', 'LIGHT', 'LIMIT', 'LINGO',
+        'LOCAL', 'LODGE', 'LOOSE', 'LOWER', 'LUCKY', 'LUNCH', 'MAGIC', 'MAJOR',
+        'MANOR', 'MARCH', 'MATCH', 'MAYOR', 'MEDAL', 'MERCY', 'METAL', 'MIGHT',
+        'MINOR', 'MIXED', 'MODEL', 'MONEY', 'MONTH', 'MORAL', 'MOTOR', 'MOUTH',
+        'MOVIE', 'MUSIC', 'NAIVE', 'NERVE', 'NIGHT', 'NOBLE', 'NOISE', 'NORTH',
+        'NOVEL', 'NURSE', 'OCCUR', 'OCEAN', 'OFFER', 'OFTEN', 'ORDER', 'OUTER',
+        'OWNER', 'PAINT', 'PAPER', 'PARTY', 'PASTA', 'PATCH', 'PAUSE', 'PEACE',
+        'PEARL', 'PENNY', 'PHASE', 'PHONE', 'PHOTO', 'PIANO', 'PIECE', 'PILOT',
+        'PITCH', 'PIXEL', 'PIZZA', 'PLACE', 'PLAIN', 'PLANE', 'PLANT', 'PLATE',
+        'POINT', 'POLAR', 'POUND', 'POWER', 'PRESS', 'PRICE', 'PRIDE', 'PRIME',
+        'PRINT', 'PRIOR', 'PRIZE', 'PROBE', 'PROVE', 'PULSE', 'PUNCH', 'QUEEN',
+        'QUERY', 'QUEST', 'QUICK', 'QUIET', 'QUOTA', 'QUOTE', 'RADIO', 'RAISE',
+        'RALLY', 'RANGE', 'RAPID', 'RATIO', 'REACH', 'READY', 'REALM', 'REBEL',
+        'REIGN', 'REPLY', 'RESET', 'RIDGE', 'RIGHT', 'RIGID', 'RISKY', 'RIVAL',
+        'RIVER', 'ROBOT', 'ROCKY', 'ROUGH', 'ROUND', 'ROUTE', 'ROYAL', 'RULER',
+        'RURAL', 'SAINT', 'SALAD', 'SAUCE', 'SCALE', 'SCENE', 'SCOPE', 'SCORE',
+        'SCOUT', 'SEIZE', 'SENSE', 'SEVEN', 'SHADE', 'SHAKE', 'SHALL', 'SHAME',
+        'SHAPE', 'SHARE', 'SHARP', 'SHELF', 'SHIFT', 'SHINE', 'SHIRT', 'SHOCK',
+        'SHOOT', 'SHORT', 'SHOUT', 'SIGHT', 'SIXTH', 'SIXTY', 'SKILL', 'SKULL',
+        'SLEEP', 'SLICE', 'SLIDE', 'SLOPE', 'SMART', 'SMELL', 'SMILE', 'SMOKE',
+        'SNAKE', 'SOLAR', 'SOLID', 'SOLVE', 'SOUTH', 'SPACE', 'SPARE', 'SPARK',
+        'SPEAR', 'SPEED', 'SPEND', 'SPINE', 'SPLIT', 'SPOKE', 'SPOON', 'SPORT',
+        'SPRAY', 'SQUAD', 'STACK', 'STAFF', 'STAGE', 'STAKE', 'STALE', 'STAMP',
+        'STAND', 'STARK', 'START', 'STATE', 'STEAM', 'STEEL', 'STEEP', 'STEER',
+        'STERN', 'STICK', 'STIFF', 'STILL', 'STOCK', 'STONE', 'STORM', 'STORY',
+        'STRAW', 'STRIP', 'STUDY', 'STYLE', 'SUGAR', 'SUITE', 'SUPER', 'SURGE',
+        'SWEEP', 'SWEET', 'SWIFT', 'SWORD', 'TABLE', 'TASTE', 'TEACH', 'THANK',
+        'THEME', 'THICK', 'THING', 'THINK', 'THIRD', 'THREE', 'THROW', 'THUMB',
+        'TIGER', 'TIGHT', 'TIMER', 'TIRED', 'TITLE', 'TOKEN', 'TOTAL', 'TOUCH',
+        'TOUGH', 'TOWER', 'TRACK', 'TRADE', 'TRAIL', 'TRAIN', 'TRAIT', 'TRIAL',
+        'TRICK', 'TROOP', 'TRUCK', 'TRULY', 'TRUNK', 'TRUST', 'TRUTH', 'TUTOR',
+        'TWICE', 'TWIST', 'ULTRA', 'UNDER', 'UNION', 'UNITY', 'UNTIL', 'UPPER',
+        'UPSET', 'URBAN', 'USAGE', 'USUAL', 'VALID', 'VALUE', 'VAPOR', 'VAULT',
+        'VENUE', 'VERSE', 'VIDEO', 'VIGOR', 'VIRAL', 'VIRUS', 'VISIT', 'VISTA',
+        'VITAL', 'VIVID', 'VOCAL', 'VOICE', 'VOTER', 'WASTE', 'WATCH', 'WATER',
+        'WEIRD', 'WHEAT', 'WHITE', 'WHOLE', 'WOMAN', 'WORLD', 'WORRY', 'WORSE',
+        'WORST', 'WORTH', 'WOULD', 'WRATH', 'WRITE', 'WRONG', 'YACHT', 'YIELD',
+        'YOUNG', 'YOUTH', 'ZEBRA',
+    ];
+
+    public static function random(): string
+    {
+        return self::$words[array_rand(self::$words)];
+    }
+}

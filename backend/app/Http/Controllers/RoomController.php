@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class RoomController extends Controller
 {
-    /**
-     * List all public waiting rooms.
-     */
     public function index()
     {
         $rooms = Room::with('host:id,name')
@@ -22,9 +18,6 @@ class RoomController extends Controller
         return response()->json($rooms);
     }
 
-    /**
-     * Create a new room.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -41,30 +34,41 @@ class RoomController extends Controller
         ]);
 
         $room->load('host:id,name');
-
-        return response()->json($room, 201);
+        return response()->json($this->formatRoom($room), 201);
     }
 
-    /**
-     * Show a single room.
-     */
     public function show(Room $room)
     {
-        $room->load('host:id,name');
-
-        return response()->json($room);
+        $room->load(['host:id,name', 'guest:id,name']);
+        return response()->json($this->formatRoom($room));
     }
 
-    /**
-     * Join a private room by join code.
-     */
+    public function joinRoom(Request $request, Room $room)
+    {
+        $userId = $request->user()->id;
+
+        if ($userId === $room->host_id) {
+            $room->load(['host:id,name', 'guest:id,name']);
+            return response()->json($this->formatRoom($room));
+        }
+
+        if ($room->guest_id && $room->guest_id !== $userId) {
+            return response()->json(['message' => 'Room is full.'], 422);
+        }
+
+        if (! $room->guest_id) {
+            $room->update(['guest_id' => $userId]);
+        }
+
+        $room->load(['host:id,name', 'guest:id,name']);
+        return response()->json($this->formatRoom($room));
+    }
+
     public function join(Request $request)
     {
-        $request->validate([
-            'join_code' => ['required', 'string'],
-        ]);
+        $request->validate(['join_code' => ['required', 'string']]);
 
-        $room = Room::with('host:id,name')
+        $room = Room::with(['host:id,name', 'guest:id,name'])
             ->where('join_code', $request->join_code)
             ->where('status', 'waiting')
             ->first();
@@ -73,25 +77,38 @@ class RoomController extends Controller
             return response()->json(['message' => 'Room not found or no longer available.'], 404);
         }
 
-        return response()->json($room);
+        $userId = $request->user()->id;
+
+        if ($userId !== $room->host_id) {
+            if ($room->guest_id && $room->guest_id !== $userId) {
+                return response()->json(['message' => 'Room is full.'], 422);
+            }
+            if (! $room->guest_id) {
+                $room->update(['guest_id' => $userId]);
+                $room->refresh()->load(['host:id,name', 'guest:id,name']);
+            }
+        }
+
+        return response()->json($this->formatRoom($room));
     }
 
-    /**
-     * Generate a human-readable join code like "brave-tiger-42".
-     */
+    private function formatRoom(Room $room): array
+    {
+        $data = $room->toArray();
+        $activeGame = $room->games()->where('status', 'in_progress')->latest()->first();
+        $data['current_game_id'] = $activeGame?->id;
+        return $data;
+    }
+
     private function generateJoinCode(): string
     {
-        $adjectives = ['brave', 'swift', 'bright', 'calm', 'bold', 'lucky', 'happy', 'wild', 'cool', 'smart',
-                       'eager', 'fancy', 'jolly', 'kind', 'lively', 'mighty', 'noble', 'proud', 'quiet', 'rapid'];
-        $nouns      = ['tiger', 'eagle', 'river', 'storm', 'flame', 'ocean', 'comet', 'forest', 'thunder', 'rocket',
-                       'falcon', 'knight', 'panda', 'wolf', 'shark', 'phoenix', 'cobra', 'viper', 'lynx', 'bear'];
-
+        $adjectives = ['brave','swift','bright','calm','bold','lucky','happy','wild','cool','smart',
+                       'eager','fancy','jolly','kind','lively','mighty','noble','proud','quiet','rapid'];
+        $nouns      = ['tiger','eagle','river','storm','flame','ocean','comet','forest','thunder','rocket',
+                       'falcon','knight','panda','wolf','shark','phoenix','cobra','viper','lynx','bear'];
         do {
-            $code = $adjectives[array_rand($adjectives)]
-                  . '-' . $nouns[array_rand($nouns)]
-                  . '-' . rand(10, 99);
+            $code = $adjectives[array_rand($adjectives)] . '-' . $nouns[array_rand($nouns)] . '-' . rand(10, 99);
         } while (Room::where('join_code', $code)->exists());
-
         return $code;
     }
 }

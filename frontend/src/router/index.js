@@ -30,6 +30,12 @@ const routes = [
     component: () => import('@/views/RoomView.vue'),
     meta: { requiresAuth: true },
   },
+  {
+    path: '/game/:id',
+    name: 'game',
+    component: () => import('@/views/GameView.vue'),
+    meta: { requiresAuth: true },
+  },
 ]
 
 const router = createRouter({
