@@ -17,6 +17,9 @@
   - [5. Winning the Match](#5-winning-the-match)
   - [6. Leaderboard](#6-leaderboard)
 - [Inactivity Cleanup](#inactivity-cleanup)
+- [Design Choices](#design-choices)
+- [Stack Choices](#stack-choices)
+- [AI Tool](#ai-tool)
 - [Installation & Running](#installation--running)
   - [Prerequisites](#prerequisites)
   - [Option A — Docker](#option-a--docker-recommended)
@@ -68,6 +71,51 @@ Check the **Leaderboard** from the lobby to see the top 10 players ranked by tot
 
 ### Inactivity Cleanup
 Rooms and games that have had no activity for **10 minutes** are automatically removed. Players still in those rooms are redirected to the lobby with a notification.
+
+---
+
+### Design Choices
+
+#### Why a 1v1 real-time multiplayer format?
+
+I deliberately chose a head-to-head, two-player format rather than a larger lobby or team-based game. The core idea behind this decision was to create something that works as a quick **"in-between" game** — something you can fire up with a single friend while you are waiting for something, sitting together bored, or just want to pass a few minutes. A two-player match stays short and snappy by design: you are always either guessing or watching your opponent guess, so there is no downtime. The 1v1 structure also makes every round feel personal and directly competitive, which is far more engaging than getting lost in a crowd.
+
+#### Why add a leaderboard?
+
+Even in a casual party-game context, having a persistent leaderboard adds a layer of long-term motivation. Wins and losses are tracked across all matches, and the top 10 players are ranked globally. This serves two purposes:
+
+1. **Replayability** — players who enjoy competing have something to chase. Climbing the leaderboard gives repeated sessions a goal beyond the immediate match.
+2. **Engagement hook** — people are naturally drawn to rankings. Seeing your name on a leaderboard, or being one win away from pushing someone else off it, is a surprisingly powerful reason to keep playing.
+
+The leaderboard intentionally stays simple (wins, losses, win percentage) so it is readable at a glance and never feels overwhelming.
+
+---
+
+### Stack Choices
+
+#### Why Laravel?
+
+I chose Laravel as the backend framework primarily because of my previous experience with it. I know it is a solid, battle-tested framework capable of handling virtually anything you need from a backend. It has a well-structured ecosystem — routing, ORM, authentication, scheduling, and more are all built in or one package away. An added benefit is that Laravel has strong representation in AI training data, which made it significantly easier to direct an AI assistant to generate correct, idiomatic code without constant corrections.
+
+#### Why Vue?
+
+I went with Vue for the frontend for the same core reason — prior experience. I know Vue looks good out of the box, is intuitive to work with, and scales well from small components up to a full SPA. Like Laravel, Vue is well-represented in AI-generated code, which meant the AI assistant could produce reliable component and store code with minimal back-and-forth.
+
+#### Why Docker and MySQL?
+
+Docker and MySQL were chosen together for practical reasons around portability. Having the entire stack — backend, frontend, database, and phpMyAdmin — containerised means the project can be exported to any other machine and run with a single command. This is especially valuable during development when you may want to share or demo the project without walking someone through a local installation. MySQL was the natural database choice to pair with this: it is the standard relational database for PHP/Laravel projects and integrates cleanly with phpMyAdmin for visual database management.
+
+---
+
+### AI Tool
+
+#### Claude Sonnet 4.6 inside Visual Studio Code
+
+For this project I used **Claude Sonnet 4.6** as my AI assistant, running directly inside **Visual Studio Code** via the GitHub Copilot extension.
+
+I chose Claude Sonnet specifically because of my past experience with it — it is robust, works methodically through problems, and tends to produce well-structured code rather than jumping to quick but brittle solutions. When something goes wrong it reasons through the issue step by step rather than just retrying the same approach, which made it a reliable partner for a project built from scratch.
+
+Running it inside Visual Studio Code was a deliberate choice as well. Having the assistant embedded in the editor means it has direct access to every file in the workspace — it can read the current state of any file, check for errors, search across the codebase, and make edits in place. This removes the copy-paste back-and-forth of using a standalone chat interface and keeps the entire development loop in one place.
 
 ---
 
@@ -227,6 +275,9 @@ When running via Docker, phpMyAdmin is available at **http://localhost:8080**. L
   - [5. Het duel winnen](#5-het-duel-winnen)
   - [6. Klassement](#6-klassement)
 - [Inactiviteitsopruiming](#inactiviteitsopruiming)
+- [Ontwerpkeuzes](#ontwerpkeuzes)
+- [Stackkeuzes](#stackkeuzes)
+- [AI-tool](#ai-tool-1)
 - [Installatie & Starten](#installatie--starten)
   - [Vereisten](#vereisten)
   - [Optie A — Docker](#optie-a--docker-aanbevolen)
@@ -278,6 +329,51 @@ Bekijk het **Klassement** via de lobby om de top 10 spelers te zien, gerangschik
 
 ### Inactiviteitsopruiming
 Kamers en spellen zonder activiteit gedurende **10 minuten** worden automatisch verwijderd. Spelers die zich nog in die kamers bevinden, worden teruggeleid naar de lobby met een melding.
+
+---
+
+### Ontwerpkeuzes
+
+#### Waarom een 1v1 real-time multiplayerformaat?
+
+Ik heb bewust gekozen voor een directe twee-spelersmodus in plaats van een grotere lobby of teamgebaseerd spel. Het kernidee achter deze keuze was het creëren van iets dat werkt als een snel **"tussendoor-spelletje"** — iets wat je met één vriend kan opstarten terwijl je ergens op wacht, samen verveeld bent of gewoon even een paar minuten wil vullen. Een 1v1-duel blijft van nature kort en direct: je bent altijd óf aan het raden óf aan het kijken hoe je tegenstander raadt, waardoor er geen dode momenten zijn. De 1v1-opzet maakt elke ronde ook persoonlijk en direct competitief, wat veel meer betrokkenheid geeft dan verdwijnen in een grote groep.
+
+#### Waarom een klassement toevoegen?
+
+Zelfs in een casual context voegt een persistent klassement een laag van langetermijnmotivatie toe. Overwinningen en nederlagen worden bijgehouden over alle duels, en de top 10 spelers worden globaal gerangschikt. Dit dient twee doelen:
+
+1. **Herhaalbaarheid** — spelers die van concurreren houden, hebben iets om naar te streven. Het beklimmen van het klassement geeft herhaalde sessies een doel buiten het directe duel om.
+2. **Verslavende haak** — mensen worden van nature aangetrokken door ranglijsten. Je naam op een klassement zien staan, of één overwinning verwijderd zijn van iemand anders eraf te stoten, is een verrassend krachtige reden om te blijven spelen.
+
+Het klassement blijft bewust eenvoudig (overwinningen, nederlagen, winstpercentage) zodat het in één oogopslag leesbaar is en nooit overweldigend aanvoelt.
+
+---
+
+### Stackkeuzes
+
+#### Waarom Laravel?
+
+Ik koos voor Laravel als backend-framework in de eerste plaats vanwege mijn eerdere ervaring ermee. Ik weet dat het een solide, bewezen framework is dat vrijwel alles aankan wat je van een backend nodig hebt. Het heeft een goed gestructureerd ecosysteem — routing, ORM, authenticatie, planning en meer zijn allemaal ingebouwd of één pakket verwijderd. Een bijkomend voordeel is dat Laravel sterk vertegenwoordigd is in AI-trainingsdata, wat het aanzienlijk makkelijker maakte om een AI-assistent te sturen naar correcte, idiomatische code zonder constante correcties.
+
+#### Waarom Vue?
+
+Ik koos voor Vue als frontend om dezelfde kernreden — eerdere ervaring. Ik weet dat Vue er standaard goed uitziet, intuïtief is om mee te werken en goed schaalt van kleine componenten tot een volledige SPA. Net als Laravel is Vue goed vertegenwoordigd in AI-gegenereerde code, wat betekende dat de AI-assistent betrouwbare component- en store-code kon produceren met minimaal heen-en-weer.
+
+#### Waarom Docker en MySQL?
+
+Docker en MySQL werden samen gekozen om praktische redenen rond overdraagbaarheid. De volledige stack — backend, frontend, database en phpMyAdmin — in containers hebben betekent dat het project naar elk ander apparaat geëxporteerd kan worden en met één commando draait. Dit is vooral waardevol tijdens ontwikkeling wanneer je het project wil delen of demonstreren zonder iemand door een lokale installatie te hoeven leiden. MySQL was de logische databasekeuze hierbij: het is de standaard relationele database voor PHP/Laravel-projecten en integreert soepel met phpMyAdmin voor visueel databasebeheer.
+
+---
+
+### AI-tool
+
+#### Claude Sonnet 4.6 in Visual Studio Code
+
+Voor dit project heb ik **Claude Sonnet 4.6** gebruikt als AI-assistent, rechtstreeks in **Visual Studio Code** via de GitHub Copilot-extensie.
+
+Ik koos specifiek voor Claude Sonnet vanwege mijn eerdere ervaringen ermee — het is robuust, werkt methodisch door problemen heen en produceert doorgaans goed gestructureerde code in plaats van snel maar fragiele oplossingen. Wanneer er iets misgaat, redeneer het de oorzaak stap voor stap door in plaats van simpelweg dezelfde aanpak opnieuw te proberen. Dat maakte het een betrouwbare partner voor een project dat volledig vanaf nul is opgebouwd.
+
+Het draaien binnen Visual Studio Code was ook een bewuste keuze. De assistent ingebed in de editor hebben betekent dat het directe toegang heeft tot elk bestand in de werkruimte — het kan de huidige staat van elk bestand lezen, fouten controleren, door de codebase zoeken en wijzigingen direct doorvoeren. Dit elimineert het heen-en-weer kopiëren en plakken van een losstaande chatinterface en houdt de volledige ontwikkelcyclus op één plek.
 
 ---
 
