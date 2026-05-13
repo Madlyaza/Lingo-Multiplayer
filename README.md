@@ -53,6 +53,147 @@ Rooms and games that have had no activity for **10 minutes** are automatically r
 
 ---
 
+### Installation & Running
+
+#### Prerequisites
+Make sure the following are installed on your machine before you begin:
+
+| Tool | Minimum version | Download |
+|------|----------------|----------|
+| [Git](https://git-scm.com/) | any | https://git-scm.com/ |
+| [PHP](https://www.php.net/) | 8.2 | https://www.php.net/downloads |
+| [Composer](https://getcomposer.org/) | 2 | https://getcomposer.org/ |
+| [Node.js](https://nodejs.org/) | 18 | https://nodejs.org/ |
+| [Docker Desktop](https://www.docker.com/products/docker-desktop/) | any | https://www.docker.com/products/docker-desktop/ |
+
+> **Note:** PHP, Composer, and Node.js are only required for the **local development** option. If you only want to run the project via Docker you only need Git and Docker Desktop.
+
+---
+
+#### Option A — Docker (recommended)
+
+Docker runs everything (backend, frontend, MySQL, phpMyAdmin, scheduler) with a single command. No local PHP or Node installation required.
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/your-username/lingo-multiplayer.git
+cd lingo-multiplayer
+```
+
+**2. Create the backend environment file**
+```bash
+cp backend/.env.example backend/.env
+```
+The Docker Compose file already injects the correct database credentials, so no further edits are needed for a local run.
+
+**3. Build and start all services**
+```bash
+docker compose up --build
+```
+This will:
+- Build the PHP-FPM backend image and run migrations + seeders automatically on first start
+- Start the Nginx reverse proxy on **http://localhost:8000**
+- Start the Vite dev server on **http://localhost:5173**
+- Start MySQL on port **3306**
+- Start phpMyAdmin on **http://localhost:8080**
+- Start the Laravel scheduler (room cleanup every minute)
+
+**4. Open the app**
+
+Navigate to **http://localhost:5173** in your browser.
+
+**5. Stop all services**
+```bash
+docker compose down
+```
+Add `-v` to also delete the database volume: `docker compose down -v`
+
+---
+
+#### Option B — Local development (without Docker)
+
+Use this option if you prefer to run the backend and frontend directly on your machine.
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/your-username/lingo-multiplayer.git
+cd lingo-multiplayer
+```
+
+**2. Set up the backend**
+```bash
+cd backend
+
+# Install PHP dependencies
+composer install
+
+# Create the environment file
+cp .env.example .env
+
+# Generate the application key
+php artisan key:generate
+```
+
+**3. Configure the database**
+
+Open `backend/.env` in a text editor and update the database section to match your local MySQL server:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=lingo_multiplayer
+DB_USERNAME=your_mysql_user
+DB_PASSWORD=your_mysql_password
+```
+Create the database in MySQL if it does not exist yet:
+```sql
+CREATE DATABASE lingo_multiplayer;
+```
+
+**4. Run migrations**
+```bash
+php artisan migrate
+```
+
+**5. Set up the frontend**
+```bash
+cd ../frontend
+npm install
+```
+
+**6. Start everything**
+
+Open the project in VS Code and press **Ctrl + Shift + B** to run the default build task. This launches three terminal panels in parallel:
+- `php artisan serve` — backend API on http://localhost:8000
+- `npm run dev` — Vite frontend on http://localhost:5173
+- `php artisan schedule:work` — room cleanup scheduler
+
+Alternatively, run each in a separate terminal manually:
+```bash
+# Terminal 1 — backend
+cd backend && php artisan serve
+
+# Terminal 2 — frontend
+cd frontend && npm run dev
+
+# Terminal 3 — scheduler
+cd backend && php artisan schedule:work
+```
+
+**7. Open the app**
+
+Navigate to **http://localhost:5173** in your browser.
+
+---
+
+#### phpMyAdmin
+When running via Docker, phpMyAdmin is available at **http://localhost:8080**. Log in with:
+- **Server:** db
+- **Username:** lingo
+- **Password:** secret
+
+---
+
 <a name="nederlands"></a>
 ## 🇳🇱 Nederlands
 
@@ -101,3 +242,144 @@ Bekijk het **Klassement** via de lobby om de top 10 spelers te zien, gerangschik
 
 ### Inactiviteitsopruiming
 Kamers en spellen zonder activiteit gedurende **10 minuten** worden automatisch verwijderd. Spelers die zich nog in die kamers bevinden, worden teruggeleid naar de lobby met een melding.
+
+---
+
+### Installatie & Starten
+
+#### Vereisten
+Zorg dat de volgende software geïnstalleerd is voordat je begint:
+
+| Tool | Minimale versie | Download |
+|------|----------------|----------|
+| [Git](https://git-scm.com/) | willekeurig | https://git-scm.com/ |
+| [PHP](https://www.php.net/) | 8.2 | https://www.php.net/downloads |
+| [Composer](https://getcomposer.org/) | 2 | https://getcomposer.org/ |
+| [Node.js](https://nodejs.org/) | 18 | https://nodejs.org/ |
+| [Docker Desktop](https://www.docker.com/products/docker-desktop/) | willekeurig | https://www.docker.com/products/docker-desktop/ |
+
+> **Let op:** PHP, Composer en Node.js zijn alleen nodig voor de **lokale ontwikkel**-optie. Als je het project alleen via Docker wilt draaien, heb je alleen Git en Docker Desktop nodig.
+
+---
+
+#### Optie A — Docker (aanbevolen)
+
+Docker start alles (backend, frontend, MySQL, phpMyAdmin, scheduler) met één enkel commando. Geen lokale PHP- of Node.js-installatie vereist.
+
+**1. Repository klonen**
+```bash
+git clone https://github.com/your-username/lingo-multiplayer.git
+cd lingo-multiplayer
+```
+
+**2. Backend-omgevingsbestand aanmaken**
+```bash
+cp backend/.env.example backend/.env
+```
+Docker Compose injecteert de juiste databasegegevens automatisch, dus verdere aanpassingen zijn niet nodig voor een lokale uitvoering.
+
+**3. Alle services bouwen en starten**
+```bash
+docker compose up --build
+```
+Dit doet het volgende:
+- Bouwt de PHP-FPM backend-image en voert migraties automatisch uit bij de eerste start
+- Start de Nginx reverse proxy op **http://localhost:8000**
+- Start de Vite dev-server op **http://localhost:5173**
+- Start MySQL op poort **3306**
+- Start phpMyAdmin op **http://localhost:8080**
+- Start de Laravel-scheduler (kameropruiming elke minuut)
+
+**4. De app openen**
+
+Ga naar **http://localhost:5173** in je browser.
+
+**5. Alle services stoppen**
+```bash
+docker compose down
+```
+Voeg `-v` toe om ook het databasevolume te verwijderen: `docker compose down -v`
+
+---
+
+#### Optie B — Lokale ontwikkeling (zonder Docker)
+
+Gebruik deze optie als je de backend en frontend liever rechtstreeks op je eigen machine draait.
+
+**1. Repository klonen**
+```bash
+git clone https://github.com/your-username/lingo-multiplayer.git
+cd lingo-multiplayer
+```
+
+**2. Backend instellen**
+```bash
+cd backend
+
+# PHP-afhankelijkheden installeren
+composer install
+
+# Omgevingsbestand aanmaken
+cp .env.example .env
+
+# Applicatiesleutel genereren
+php artisan key:generate
+```
+
+**3. Database configureren**
+
+Open `backend/.env` in een teksteditor en pas het databasegedeelte aan naar jouw lokale MySQL-server:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=lingo_multiplayer
+DB_USERNAME=jouw_mysql_gebruiker
+DB_PASSWORD=jouw_mysql_wachtwoord
+```
+Maak de database aan in MySQL als die nog niet bestaat:
+```sql
+CREATE DATABASE lingo_multiplayer;
+```
+
+**4. Migraties uitvoeren**
+```bash
+php artisan migrate
+```
+
+**5. Frontend instellen**
+```bash
+cd ../frontend
+npm install
+```
+
+**6. Alles starten**
+
+Open het project in VS Code en druk op **Ctrl + Shift + B** om de standaard build-taak uit te voeren. Dit start drie terminalpanelen tegelijk:
+- `php artisan serve` — backend-API op http://localhost:8000
+- `npm run dev` — Vite frontend op http://localhost:5173
+- `php artisan schedule:work` — kameropruimings-scheduler
+
+Of start elk onderdeel handmatig in een aparte terminal:
+```bash
+# Terminal 1 — backend
+cd backend && php artisan serve
+
+# Terminal 2 — frontend
+cd frontend && npm run dev
+
+# Terminal 3 — scheduler
+cd backend && php artisan schedule:work
+```
+
+**7. De app openen**
+
+Ga naar **http://localhost:5173** in je browser.
+
+---
+
+#### phpMyAdmin
+Bij gebruik van Docker is phpMyAdmin beschikbaar op **http://localhost:8080**. Log in met:
+- **Server:** db
+- **Gebruikersnaam:** lingo
+- **Wachtwoord:** secret
