@@ -7,6 +7,24 @@
 <a name="english"></a>
 ## 🇬🇧 English
 
+**Table of Contents**
+- [What is Lingo Multiplayer?](#what-is-lingo-multiplayer)
+- [How to Play](#how-to-play)
+  - [1. Create an Account](#1-create-an-account)
+  - [2. Find or Create a Room](#2-find-or-create-a-room)
+  - [3. Start the Game](#3-start-the-game)
+  - [4. Guess the Word](#4-guess-the-word)
+  - [5. Winning the Match](#5-winning-the-match)
+  - [6. Leaderboard](#6-leaderboard)
+- [Inactivity Cleanup](#inactivity-cleanup)
+- [Installation & Running](#installation--running)
+  - [Prerequisites](#prerequisites)
+  - [Option A — Docker](#option-a--docker-recommended)
+  - [Option B — Local development](#option-b--local-development-without-docker)
+  - [phpMyAdmin](#phpmyadmin)
+
+---
+
 ### What is Lingo Multiplayer?
 
 Lingo Multiplayer is a real-time two-player word guessing game inspired by the classic Dutch TV show *Lingo*. Both players compete to guess the same secret five-letter word before their opponent does. The first player to score **5 points** wins the match.
@@ -198,6 +216,24 @@ When running via Docker, phpMyAdmin is available at **http://localhost:8080**. L
 ## 🇳🇱 Nederlands
 
 [↑ Terug naar boven](#lingo-multiplayer)
+
+**Inhoudsopgave**
+- [Wat is Lingo Multiplayer?](#wat-is-lingo-multiplayer)
+- [Hoe speel je het?](#hoe-speel-je-het)
+  - [1. Account aanmaken](#1-account-aanmaken)
+  - [2. Kamer zoeken of aanmaken](#2-kamer-zoeken-of-aanmaken)
+  - [3. Spel starten](#3-spel-starten)
+  - [4. Het woord raden](#4-het-woord-raden)
+  - [5. Het duel winnen](#5-het-duel-winnen)
+  - [6. Klassement](#6-klassement)
+- [Inactiviteitsopruiming](#inactiviteitsopruiming)
+- [Installatie & Starten](#installatie--starten)
+  - [Vereisten](#vereisten)
+  - [Optie A — Docker](#optie-a--docker-aanbevolen)
+  - [Optie B — Lokale ontwikkeling](#optie-b--lokale-ontwikkeling-zonder-docker)
+  - [phpMyAdmin](#phpmyadmin-1)
+
+---
 
 ### Wat is Lingo Multiplayer?
 
