@@ -164,7 +164,15 @@ function startPolling() {
     }
     // Only poll when waiting for opponent — silently, no loading flash
     if (!isMyTurn.value) {
-      await gameStore.silentRefresh(game.value.id)
+      try {
+        await gameStore.silentRefresh(game.value.id)
+      } catch (err) {
+        if (err.response?.status === 404) {
+          stopPolling()
+          sessionStorage.setItem('kicked', 'Your game was closed due to inactivity.')
+          router.push('/dashboard')
+        }
+      }
     }
   }, 2000)
 }

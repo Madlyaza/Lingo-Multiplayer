@@ -144,7 +144,13 @@ async function pollRoom() {
       clearInterval(pollInterval)
       router.push(`/game/${updated.current_game_id}`)
     }
-  } catch {}
+  } catch (err) {
+    if (err.response?.status === 404) {
+      clearInterval(pollInterval)
+      sessionStorage.setItem('kicked', 'Your room was closed due to inactivity.')
+      router.push('/dashboard')
+    }
+  }
 }
 
 async function joinRoom() {

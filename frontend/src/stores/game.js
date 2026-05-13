@@ -20,7 +20,8 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
-  // Silent background refresh — merges in-place, never shows loading spinner
+  // Silent background refresh — merges in-place, never shows loading spinner.
+  // Throws on 404 so callers can detect room/game deletion.
   async function silentRefresh(id) {
     try {
       const { data } = await api.get(`/games/${id}`)
@@ -29,8 +30,9 @@ export const useGameStore = defineStore('game', () => {
       } else {
         game.value = data
       }
-    } catch {
-      // ignore transient errors during background polling
+    } catch (err) {
+      if (err.response?.status === 404) throw err
+      // ignore other transient network errors
     }
   }
 

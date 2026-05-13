@@ -12,6 +12,12 @@
     </header>
 
     <main class="dashboard-main">
+      <!-- Kicked / inactivity notice -->
+      <div v-if="kickedNotice" class="notice-kicked">
+        {{ kickedNotice }}
+        <button class="notice-close" @click="kickedNotice = ''">&times;</button>
+      </div>
+
       <!-- Actions bar -->
       <div class="actions-bar">
         <button class="btn-create" @click="showCreateModal = true">+ Create Room</button>
@@ -73,13 +79,23 @@ const auth   = useAuthStore()
 const rooms  = useRoomsStore()
 const router = useRouter()
 
+const kickedNotice = ref('')
+
 const showCreateModal = ref(false)
 const loggingOut      = ref(false)
 const joinCode        = ref('')
 const joinError       = ref('')
 const joining         = ref(false)
 
-onMounted(() => rooms.fetchPublicRooms())
+onMounted(() => {
+  rooms.fetchPublicRooms()
+
+  const msg = sessionStorage.getItem('kicked')
+  if (msg) {
+    kickedNotice.value = msg
+    sessionStorage.removeItem('kicked')
+  }
+})
 
 async function handleLogout() {
   loggingOut.value = true
@@ -106,6 +122,29 @@ function handleJoinPublic(room) {
 </script>
 
 <style scoped>
+.notice-kicked {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #3b1f10;
+  border: 1px solid #7c2d12;
+  color: #fdba74;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.notice-close {
+  background: none;
+  border: none;
+  color: #fdba74;
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 0.25rem;
+}
+
 .dashboard-main {
   padding: 2rem;
   max-width: 900px;

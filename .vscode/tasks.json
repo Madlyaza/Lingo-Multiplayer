@@ -29,11 +29,24 @@
     },
     {
       "label": "Start Dev (Frontend + Backend)",
-      "dependsOn": ["Start Backend", "Start Frontend"],
+      "dependsOn": ["Start Backend", "Start Frontend", "Start Scheduler"],
       "dependsOrder": "parallel",
       "group": {
         "kind": "build",
         "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Scheduler",
+      "type": "shell",
+      "command": "php artisan schedule:work",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "label": "Scheduler"
       },
       "problemMatcher": []
     },
